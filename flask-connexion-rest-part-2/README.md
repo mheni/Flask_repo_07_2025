@@ -61,9 +61,6 @@ Navigate inside the `rp_flask_api/`, enter the [Python interactive shell](https:
 
 This will create a database named `people.db` that you can use with your project.
 
-## Author
-
-- **Philipp Acsany**, E-mail: [philipp@realpython.com](philipp@realpython.com)
 
 ## License
 
