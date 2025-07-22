@@ -51,9 +51,7 @@ You can start your Flask development server by running `app.py` as a script:
 
 To see your home page, visit `http://127.0.0.1:8000`.
 
-## Author
 
-- **Philipp Acsany**, E-mail: [philipp@realpython.com](philipp@realpython.com)
 
 ## License
 
