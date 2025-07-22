@@ -38,10 +38,4 @@ Navigate into the `rp_flask_api/` folder:
 
 This will delete any existing database and create a new database named `people.db` that you can use with your project.
 
-## Author
 
-- **Philipp Acsany**, E-mail: [philipp@realpython.com](philipp@realpython.com)
-
-## License
-
-Distributed under the MIT license. See [`LICENSE`](../LICENSE) for more information.
