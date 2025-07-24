@@ -11,9 +11,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}" />
 
   <!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-
-  
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
 
 <body>
@@ -23,16 +21,16 @@
     <div class="section editor">
       <label for="fname">First Name</label>
       <input id="fname" type="text" placeholder="Enter first name" />
-      <br />
 
       <label for="lname">Last Name</label>
       <input id="lname" type="text" placeholder="Enter last name" />
-      <br />
 
-      <button id="create">Create</button>
-      <button id="update">Update</button>
-      <button id="delete">Delete</button>
-      <button id="reset">Reset</button>
+      <div class="buttons">
+        <button id="create">Create</button>
+        <button id="update">Update</button>
+        <button id="delete">Delete</button>
+        <button id="reset">Reset</button>
+      </div>
     </div>
 
     <div class="people">
@@ -45,14 +43,14 @@
             <th>Update Time</th>
           </tr>
         </thead>
-        <tbody>
-          <!-- Data from API will be dynamically inserted here -->
+        <tbody id="people-table">
+          <!-- Fetched people will be inserted here -->
         </tbody>
       </table>
     </div>
 
-    <div class="error">
-      <!-- Error messages will appear here -->
+    <div class="error" id="error-msg">
+      <!-- Error messages will be shown here -->
     </div>
   </div>
 
