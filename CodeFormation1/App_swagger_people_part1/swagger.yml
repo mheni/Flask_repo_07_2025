@@ -51,6 +51,30 @@ paths:
             $ref: "#/definitions/Person"
         409:
           description: Person already exists
+  /people/{lname}:
+    put:
+      operationId: people.update
+      tags:
+        - People
+      summary: Update an existing person
+      description: Updates fname of the person by last name
+      parameters:
+        - name: lname
+          in: path
+          required: true
+          type: string
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Person"
+      responses:
+        200:
+          description: Person updated
+          schema:
+            $ref: "#/definitions/Person"
+        404:
+          description: Person not found
 
 definitions:
   Person:
