@@ -1,14 +1,62 @@
-<!-- templates/home.html -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>RP Flask REST API</title>
+  <meta charset="UTF-8" />
+  <title>People Demo Application</title>
+
+  <!-- Normalize CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css" />
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}" />
+
+  <!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+  
 </head>
+
 <body>
-    <h1>
-        Hello, Attila
-    </h1>
+  <div class="container">
+    <h1 class="banner">People Demo Application</h1>
+
+    <div class="section editor">
+      <label for="fname">First Name</label>
+      <input id="fname" type="text" placeholder="Enter first name" />
+      <br />
+
+      <label for="lname">Last Name</label>
+      <input id="lname" type="text" placeholder="Enter last name" />
+      <br />
+
+      <button id="create">Create</button>
+      <button id="update">Update</button>
+      <button id="delete">Delete</button>
+      <button id="reset">Reset</button>
+    </div>
+
+    <div class="people">
+      <table>
+        <caption>People</caption>
+        <thead>
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Update Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Data from API will be dynamically inserted here -->
+        </tbody>
+      </table>
+    </div>
+
+    <div class="error">
+      <!-- Error messages will appear here -->
+    </div>
+  </div>
+
+  <!-- Custom JS -->
+  <script src="{{ url_for('static', filename='js/home.js') }}"></script>
 </body>
 </html>
