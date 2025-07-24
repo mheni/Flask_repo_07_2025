@@ -1,119 +1,71 @@
-$(document).ready(function () {
-  const API_URL = "/api/people";
+const API_BASE = "/api/people";
 
-  // Fonction pour charger et afficher les personnes
-  function loadPeople() {
-    $.getJSON(API_URL)
-      .done(function (data) {
-        const tbody = $("tbody");
-        tbody.empty();
-
-        data.forEach(person => {
-          const row = `
-            <tr data-lname="${person.lname}">
-              <td>${person.fname}</td>
-              <td>${person.lname}</td>
-              <td>${person.timestamp}</td>
-            </tr>`;
-          tbody.append(row);
-        });
-
-        $(".error").text(""); // Clear errors on success
-      })
-      .fail(function () {
-        $(".error").text("Erreur de chargement des personnes.");
-      });
-  }
-
-  // Reset les champs du formulaire et messages d'erreur
-  $("#reset").click(function () {
-    $("#fname").val("");
-    $("#lname").val("");
-    $(".error").text("");
-  });
-
-  // Créer une personne
-  $("#create").click(function () {
-    const fname = $("#fname").val().trim();
-    const lname = $("#lname").val().trim();
-
-    if (!fname || !lname) {
-      $(".error").text("Veuillez remplir le prénom et le nom.");
-      return;
-    }
-
-    $.ajax({
-      url: `${API_URL}/${lname}`,
-      method: "POST",
-      contentType: "application/json",
-      data: JSON.stringify({ fname }),
-      success: function () {
-        loadPeople();
-        $("#reset").click();
-      },
-      error: function () {
-        $(".error").text("Erreur lors de la création.");
-      }
+function refreshTable() {
+  $.get(API_BASE, function (data) {
+    const table = $("#people-table");
+    table.empty();
+    data.forEach(person => {
+      table.append(`
+        <tr>
+          <td>${person.fname}</td>
+          <td>${person.lname}</td>
+          <td>${person.timestamp}</td>
+        </tr>
+      `);
     });
   });
+}
 
-  // Mettre à jour une personne
-  $("#update").click(function () {
-    const fname = $("#fname").val().trim();
-    const lname = $("#lname").val().trim();
+function showError(message) {
+  $("#error-msg").text(message);
+  setTimeout(() => $("#error-msg").text(""), 3000);
+}
 
-    if (!fname || !lname) {
-      $(".error").text("Veuillez remplir le prénom et le nom.");
-      return;
-    }
+$("#create").click(function () {
+  const fname = $("#fname").val();
+  const lname = $("#lname").val();
+  if (!fname || !lname) return showError("Both names are required");
 
-    $.ajax({
-      url: `${API_URL}/${lname}`,
-      method: "PUT",
-      contentType: "application/json",
-      data: JSON.stringify({ fname }),
-      success: function () {
-        loadPeople();
-        $("#reset").click();
-      },
-      error: function () {
-        $(".error").text("Erreur lors de la mise à jour.");
-      }
-    });
+  $.ajax({
+    url: `${API_BASE}/${lname}`,
+    type: "POST",
+    contentType: "application/json",
+    data: JSON.stringify({ fname, lname }),
+    success: refreshTable,
+    error: res => showError(res.responseJSON?.message || "Create failed")
   });
-
-  // Supprimer une personne
-  $("#delete").click(function () {
-    const lname = $("#lname").val().trim();
-
-    if (!lname) {
-      $(".error").text("Veuillez remplir le nom pour supprimer.");
-      return;
-    }
-
-    $.ajax({
-      url: `${API_URL}/${lname}`,
-      method: "DELETE",
-      success: function () {
-        loadPeople();
-        $("#reset").click();
-      },
-      error: function () {
-        $(".error").text("Erreur lors de la suppression.");
-      }
-    });
-  });
-
-  // Cliquer sur une ligne pour remplir le formulaire
-  $("tbody").on("click", "tr", function () {
-    const fname = $(this).find("td:eq(0)").text();
-    const lname = $(this).find("td:eq(1)").text();
-
-    $("#fname").val(fname);
-    $("#lname").val(lname);
-    $(".error").text("");
-  });
-
-  // Charger la liste au chargement de la page
-  loadPeople();
 });
+
+$("#update").click(function () {
+  const fname = $("#fname").val();
+  const lname = $("#lname").val();
+  if (!lname) return showError("Last name is required");
+
+  $.ajax({
+    url: `${API_BASE}/${lname}`,
+    type: "PUT",
+    contentType: "application/json",
+    data: JSON.stringify({ fname }),
+    success: refreshTable,
+    error: res => showError(res.responseJSON?.message || "Update failed")
+  });
+});
+
+$("#delete").click(function () {
+  const lname = $("#lname").val();
+  if (!lname) return showError("Last name is required");
+
+  $.ajax({
+    url: `${API_BASE}/${lname}`,
+    type: "DELETE",
+    success: refreshTable,
+    error: res => showError(res.responseJSON?.message || "Delete failed")
+  });
+});
+
+$("#reset").click(function () {
+  $("#fname").val("");
+  $("#lname").val("");
+});
+
+$(document).ready(refreshTable);
