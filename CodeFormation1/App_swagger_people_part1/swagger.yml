@@ -1,8 +1,8 @@
 swagger: "2.0"
 info:
-  description: This is the swagger file that goes with our server code
+  description: This is the Swagger file that goes with our server code
   version: "1.0.0"
-  title: Swagger REST Article
+  title: Swagger People API
 
 consumes:
   - application/json
@@ -17,8 +17,51 @@ paths:
       operationId: people.read_all
       tags:
         - People
-      summary: "Lire la liste des personnes"
-      description: "Read the list of people"
+      summary: Get all people
+      description: Returns a list of all people
       responses:
         200:
-          description: "Successful read people list operation"
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Person"
+
+  /people/{lname}:
+    post:
+      operationId: people.create
+      tags:
+        - People
+      summary: Create a new person
+      description: Creates a person using the last name as key
+      parameters:
+        - name: lname
+          in: path
+          required: true
+          type: string
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Person"
+      responses:
+        201:
+          description: Person created
+          schema:
+            $ref: "#/definitions/Person"
+        409:
+          description: Person already exists
+
+definitions:
+  Person:
+    type: object
+    required:
+      - fname
+      - lname
+    properties:
+      fname:
+        type: string
+      lname:
+        type: string
+      timestamp:
+        type: string
