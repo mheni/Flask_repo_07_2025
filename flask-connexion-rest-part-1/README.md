@@ -1,6 +1,6 @@
 # Python REST APIs With Flask, Connexion, and SQLAlchemy – Part 1
 
-This repository holds the code for part one of the Real Python [Python REST APIs With Flask, Connexion, and SQLAlchemy](https://realpython.com/flask-connexion-rest-api) tutorial series.
+This repository holds the code for part one of the Real Python [Python REST APIs With Flask, Connexion, and SQLAlchemy] tutorial series.
 
 ## Real Python Flask REST API – Part 1
 
